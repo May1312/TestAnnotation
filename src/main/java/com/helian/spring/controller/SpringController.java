@@ -1,15 +1,16 @@
 package com.helian.spring.controller;
 
 import java.util.List;
+import java.util.Map;
+
+import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
-import com.helian.spring.bean.MileageTimeDTO;
-import com.helian.spring.bean.OfflineCarDTO;
 import com.helian.spring.service.SpringService;
 
 @Controller
@@ -23,13 +24,14 @@ public class SpringController {
 	@Autowired
 	private SpringService SpringService;
 
-	@RequestMapping(value = "/run", method = RequestMethod.POST)
-	public void run(@RequestBody OfflineCarDTO dto) {
-		List<MileageTimeDTO> mileageList = dto.getMileageList();
-		for (MileageTimeDTO mileageTimeDTO : mileageList) {
-			System.out.println(dto.getSerialNumber());
-			System.out.println(mileageTimeDTO.getTime());
-			System.out.println(mileageTimeDTO.getMileage());
+	@RequestMapping(value = "/run", method = RequestMethod.GET)
+	public void run(HttpServletRequest request,
+			@RequestParam(value = "year") String year,
+			@RequestParam(value = "month",required=false) String month) {
+		List result = SpringService.run("CMMIOI1088",year,month);
+		for (Object object : result) {
+			System.out.println(object.toString());
 		}
+		
 	}
 }

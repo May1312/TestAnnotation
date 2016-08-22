@@ -1,9 +1,16 @@
 package com.helian.spring.bean;
 
+import java.io.Serializable;
 import java.util.List;
 
-public class OfflineCarDTO {
+public class OfflineCarDTO implements Serializable{
 
+	private static final long serialVersionUID = 2208935299735542980L;
+	
+	
+	public OfflineCarDTO() {
+		super();
+	}
 	private String serialNumber;
 	private List<MileageTimeDTO> mileageList;
 	public String getSerialNumber() {
@@ -18,5 +25,4 @@ public class OfflineCarDTO {
 	public void setMileageList(List<MileageTimeDTO> mileageList) {
 		this.mileageList = mileageList;
 	}
-	
 }

@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.helian.spring.mapper.SpringMapper">
+
+	<resultMap id="OBDOfflineDataResultMap" type="com.helian.spring.bean.OfflineCarDTO">
+		<result property="serialNumber" column="serial_number" />
+	</resultMap>
+
+	<resultMap id="dayListResult" type="com.helian.spring.bean.DayListDTO">
+		<result property="day" column="time" />
+	</resultMap>
+	<resultMap id="monthListResult" type="com.helian.spring.bean.MonthListDTO">
+		<result property="month" column="time" />
+	</resultMap>
+
+	<insert id="add">
+		INSERT INTO `OBDOffline_mileage`
+		(`serial_number`, `time`, `mileage`)
+		VALUES
+		<foreach collection="mileageList" item="MileageDateDTO"
+			separator=",">
+			(
+			#{serialNumber},
+			#{MileageDateDTO.time},
+			#{MileageDateDTO.mileage}
+			)
+		</foreach>
+	</insert>
+	<select id="findInfoBySnAndTime" resultMap='monthListResult'>
+		SELECT MONTH(time) as
+		time,SUM(mileage) as mileages FROM `OBDOffline_mileage` WHERE
+		serial_number =
+		#{0}
+		AND
+		time LIKE concat(concat('%',#{1}),'%') GROUP BY
+		time
+	</select>
+	<select id="findDayList" resultMap="dayListResult">
+		SELECT DAY(time) as
+		time,mileage FROM `OBDOffline_mileage` WHERE serial_number =
+		#{0}
+		AND
+		time LIKE concat(concat('%',#{1}),'%')
+	</select>
+</mapper>
