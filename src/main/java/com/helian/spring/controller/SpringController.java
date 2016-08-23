@@ -1,16 +1,18 @@
 package com.helian.spring.controller;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
-
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.SpringVersion;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-
+import com.helian.spring.bean.MonthListDTO;
 import com.helian.spring.service.SpringService;
 
 @Controller
@@ -25,13 +27,17 @@ public class SpringController {
 	private SpringService SpringService;
 
 	@RequestMapping(value = "/run", method = RequestMethod.GET)
-	public void run(HttpServletRequest request,
+	public ResponseEntity<List<MonthListDTO>> run(HttpServletRequest request,
 			@RequestParam(value = "year") String year,
 			@RequestParam(value = "month",required=false) String month) {
-		List result = SpringService.run("CMMIOI1088",year,month);
-		for (Object object : result) {
-			System.out.println(object.toString());
-		}
+		List<MonthListDTO> result = SpringService.run("CMMIOI1088",year,month);
+		String version = SpringVersion.getVersion();
+		System.out.println(version);
 		
+		//return null;
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("status", 200);
+	
+		return ResponseEntity.ok(result);
 	}
 }

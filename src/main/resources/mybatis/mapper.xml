@@ -11,6 +11,8 @@
 	</resultMap>
 	<resultMap id="monthListResult" type="com.helian.spring.bean.MonthListDTO">
 		<result property="month" column="time" />
+		<result property="day" column="day" />
+		<result property="mileage" column="mileage" />
 	</resultMap>
 
 	<insert id="add">
@@ -35,11 +37,18 @@
 		time LIKE concat(concat('%',#{1}),'%') GROUP BY
 		time
 	</select>
-	<select id="findDayList" resultMap="dayListResult">
-		SELECT DAY(time) as
+	<select id="findDayList" resultMap="monthListResult">
+		<!-- SELECT DAY(time) as
 		time,mileage FROM `OBDOffline_mileage` WHERE serial_number =
 		#{0}
 		AND
-		time LIKE concat(concat('%',#{1}),'%')
+		time LIKE concat(concat('%',#{1}),'%') -->
+		
+		SELECT MONTH(time) as
+		month,DAY(time) as day,mileage FROM `OBDOffline_mileage` WHERE
+		serial_number =
+		#{0}
+		AND
+		time LIKE concat(concat('%',#{1}),'%') 
 	</select>
 </mapper>
