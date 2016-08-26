@@ -9,13 +9,15 @@
     <!-- 配置环境变量 -->  
             <bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource">
                 <property name="driverClassName" value="com.mysql.jdbc.Driver" />  
-                <property name="url" value="jdbc:mysql://127.0.0.1:3306/chleon?characterEncoding=UTF-8" />  
+                <property name="url" value="jdbc:mysql://192.168.44.133:3306/hang?characterEncoding=UTF-8" />  
                 <property name="username" value="root" />  
-                <property name="password" value="123" />  
+                <property name="password" value="1234" />  
             </bean> 
       <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
 		<property name="mapperLocations" value="classpath*:mybatis/mapper.xml" />
 		<property name="dataSource" ref="dataSource" />
+		<!-- mybatis全局配置文件  驼峰映射  -->
+		<property name="configLocation" value="classpath:mybatis-config.xml" />
 	</bean>
 
 	<bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
