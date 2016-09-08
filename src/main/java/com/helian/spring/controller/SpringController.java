@@ -9,13 +9,17 @@ import javax.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.SpringVersion;
 import org.springframework.http.ResponseEntity;
+import org.springframework.http.ResponseEntity.BodyBuilder;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.alibaba.fastjson.JSON;
 import com.helian.spring.bean.MonthListDTO;
 import com.helian.spring.bean.User;
+import com.helian.spring.bean.User2;
 import com.helian.spring.service.SpringService;
 
 @Controller
@@ -43,9 +47,21 @@ public class SpringController {
 	
 		return ResponseEntity.ok(result);
 	}
-	@RequestMapping(value = "/user",method=RequestMethod.GET)
-	public ResponseEntity<List<User>> findUserList(){
-		List<User> result = SpringService.findUserList();
+	@RequestMapping(value = "/user2",method=RequestMethod.GET)
+	public ResponseEntity<List<User2>> findUserList(){
+		List<User2> result = SpringService.findUserList();
 		return ResponseEntity.ok(result);
+	}
+	@RequestMapping(value = "/user",method={RequestMethod.POST,RequestMethod.GET})
+	public ResponseEntity<Map<String,Object>> insertUser(HttpServletRequest request){
+		String string = (String) request.getParameter("user");
+		System.out.println(string);
+		//json字符串转对象
+		User user = JSON.parseObject(string, User.class);
+		System.out.println(user.toString());
+		SpringService.insertUser(user);
+		Map<String,Object> map = new HashMap<String,Object> ();
+		map.put("result", "success");
+		return ResponseEntity.ok(map);
 	}
 }

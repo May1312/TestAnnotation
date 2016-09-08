@@ -14,4 +14,8 @@
 	<select id="findUserList" resultType="com.helian.spring.bean.User">
 			SELECT * FROM `user`;
 	</select>
+	
+	<insert id="addUser" parameterType="com.helian.spring.bean.User">
+		INSERT INTO `user2` (`name`, `age`, `time`) VALUES (#{name}, #{age}, #{time});
+	</insert>
 </mapper>
