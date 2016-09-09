@@ -81,10 +81,6 @@
 			<artifactId>mysql-connector-java</artifactId>
 			<version>5.1.6</version>
 		</dependency>
-		<!-- https://mvnrepository.com/artifact/org.springframework/spring-asm -->
-		<!-- <dependency> <groupId>org.springframework</groupId> <artifactId>spring-asm</artifactId> 
-			<version>4.1.6.RELEASE</version> </dependency> -->
-		<!-- https://mvnrepository.com/artifact/org.springframework/spring-aspects -->
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-aspects</artifactId>
