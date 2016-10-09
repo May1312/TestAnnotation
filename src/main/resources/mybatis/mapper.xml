@@ -9,8 +9,6 @@
 	 	select * from `OBDOffline_mileage` 
 	 </select>
 
-
-
 	<select id="findUserList" resultType="com.helian.spring.bean.User">
 			SELECT * FROM `user`;
 	</select>
