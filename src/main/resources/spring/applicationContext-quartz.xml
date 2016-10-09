@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:p="http://www.springframework.org/schema/p" xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:tx="http://www.springframework.org/schema/tx" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
+	http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.0.xsd
+	http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-3.0.xsd http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-3.0.xsd
+	http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-4.0.xsd">
+<!-- java定时任务 -->
+	<!-- <bean id="SchedulerTask" class="org.springframework.scheduling.quartz.JobDetailBean"> 
+		<property name="jobClass"> <value>com.helian.spring.bean.JavaTimer</value> 
+		</property> </bean> <bean id="SchedulerTaskTrigger" class="org.springframework.scheduling.quartz.CronTriggerBean"> 
+		<property name="jobDetail" ref="SchedulerTask" /> <property name="cronExpression"> 
+		<value>0 53 10 ? * *</value> </property> </bean> <bean class="org.springframework.scheduling.quartz.SchedulerFactoryBean"> 
+		<property name="triggers"> <list> <ref bean="SchedulerTaskTrigger" /> </list> 
+		</property> </bean> -->
+	<!-- <bean id="testQuartzJobDetail"
+		class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+		<property name="targetObject" value="com.helian.spring.bean.JavaTimer" />
+		false表示等上一个任务执行完后再开启新的任务
+		<property name="concurrent" value="false" />
+		<property name="targetMethod" value="helloTest" />
+		<property name="targetMethod">
+			<value>run</value>
+		</property>
+		<property name="arguments" value="argsvalue" />
+		
+		指定job的名称
+		<property name="name" value="myJob" />
+		指定job的分组
+		<property name="group" value="jobs" />
+		必须设置为true，如果为false，当没有活动的触发器与之关联时会在调度器中删除该任务
+		<property name="durability" value="true" />
+	</bean>
+	定义触发器
+	<bean id="testQuartzJobTrigger"
+		class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+		<property name="jobDetail">
+			<ref bean="testQuartzJobDetail" />
+		</property>
+		<property name="cronExpression">
+			<value>0 23 11 ? * *</value>
+		</property>
+	</bean>
+	定义调度器
+	<bean class="org.springframework.scheduling.quartz.SchedulerFactoryBean"
+		autowire="no">
+		<property name="triggers">
+			<list>
+				<ref bean="testQuartzJobTrigger" />
+			</list>
+		</property>
+	</bean> -->
+	
+	<!-- 定义任务bean -->
+	<bean name="myJobDetail" class="org.springframework.scheduling.quartz.JobDetailFactoryBean">
+		<!-- 指定具体的job类 -->
+		<property name="jobClass" value="com.helian.spring.bean.JavaTimer" />
+		<!-- 指定job的名称 -->
+		<property name="name" value="myJob" />
+		<!-- 指定job的分组 -->
+		<property name="group" value="jobs" />
+		<!-- 必须设置为true，如果为false，当没有活动的触发器与之关联时会在调度器中删除该任务 -->
+		<property name="durability" value="true" />
+		<!-- 指定spring容器的key，如果不设定在job中的jobmap中是获取不到spring容器的 -->
+		<property name="applicationContextJobDataKey" value="applicationContext" />
+	</bean>
+
+	<!-- 定义触发器 -->
+	<bean id="cronTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+		<property name="jobDetail" ref="myJobDetail" />
+		<!-- 每一分钟执行一次，清理未付款超时订单 -->
+		<!-- <property name="cronExpression" value="0 0/1 * * * ?" /> -->
+		<property name="cronExpression" value="0 1 * * * ?" />
+		
+	</bean>
+
+	<!-- 定义调度器 -->
+	<bean class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
+		<property name="triggers">
+			<list>
+				<ref bean="cronTrigger" />
+			</list>
+		</property>
+	</bean>
+</beans>
