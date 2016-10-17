@@ -20,5 +20,8 @@ public class DayListDTO implements Serializable{
 	public void setMileage(long mileage) {
 		this.mileage = mileage;
 	}
-	
+	private void syso() {
+		// TODO aaaaaaaaaaaa
+
+	}
 }
