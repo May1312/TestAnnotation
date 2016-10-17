@@ -69,8 +69,6 @@
 	<!-- 定义触发器 -->
 	<bean id="cronTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
 		<property name="jobDetail" ref="myJobDetail" />
-		<!-- 每一分钟执行一次，清理未付款超时订单 -->
-		<!-- <property name="cronExpression" value="0 0/1 * * * ?" /> -->
 		<property name="cronExpression" value="0 1 * * * ?" />
 		
 	</bean>

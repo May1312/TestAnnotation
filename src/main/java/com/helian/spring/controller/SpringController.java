@@ -2,12 +2,15 @@ package com.helian.spring.controller;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.SpringVersion;
 import org.springframework.http.ResponseEntity;
@@ -89,5 +92,25 @@ public class SpringController {
 			e.printStackTrace();
 		} 
 		
+	}
+	@Test
+	public void run(){
+		/*Date date = new Date();
+		Date day = this.fetchBeginOfDay(date);
+		System.out.println(day);*/
+		List<Object> list= null;
+		System.out.println(list==null);
+		Date date = new Date((Long.valueOf("111111111111")));
+		System.out.println(date);
+	}
+	@Deprecated
+	public Date fetchBeginOfDay(Date date) {
+		Calendar cal = Calendar.getInstance();
+		cal.setTime(date);
+		cal.set(Calendar.HOUR_OF_DAY, 0);
+		cal.set(Calendar.MINUTE, 0);
+		cal.set(Calendar.SECOND, 0);
+		cal.set(Calendar.MILLISECOND, 0);
+		return cal.getTime();
 	}
 }
