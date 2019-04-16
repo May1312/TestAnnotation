@@ -76,7 +76,7 @@ public class SpringController {
 		cal.set(Calendar.MINUTE, 0);
 		cal.set(Calendar.SECOND, 0);
 		cal.set(Calendar.MILLISECOND, 0);
-		System.out.println("测试master分支");
+		System.out.println("测试master分支2");
 		return cal.getTime();
 	}
 }

@@ -7,6 +7,7 @@ public class User {
 	private String name;
 	private Integer age;
 	private Date time;
+	private String hello;
 	public String getName() {
 		return name;
 	}
